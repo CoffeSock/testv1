@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>System Compromised</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: #00ff66;
+      font-family: monospace;
+      overflow: hidden;
+    }
+
+    .red {
+      color: red;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 22px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0.3; }
+    }
+
+    #log {
+      padding: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: #00ff66;
+      animation: blink 0.8s infinite;
+    }
+  </style>
+</head>
+<body>
+
+<div class="red">⚠ SYSTEM SECURITY BREACH ⚠</div>
+
+<div id="log"></div>
+<span class="cursor"></span>
+
+<script>
+  const lines = [
+    "[BOOT] Initializing kernel...",
+    "[OK] Loading system modules",
+    "[OK] Mounting secure partition",
+    "[WARN] Firewall bypass detected",
+    "[INFO] Scanning network...",
+    "[ALERT] Unauthorized access detected",
+    "[CRITICAL] Root access granted",
+    "[SYSTEM] CONTROL OVERRIDDEN"
+  ];
+
+  let i = 0;
+  const log = document.getElementById("log");
+
+  function addLine() {
+    if (i >= lines.length) return;
+    log.innerHTML += lines[i] + "<br/>";
+    i++;
+    setTimeout(addLine, 900);
+  }
+
+  addLine();
+</script>
+
+</body>
+</html>
