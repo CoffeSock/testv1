@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>System Compromised</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Status</title>
   <style>
     body {
       margin: 0;
@@ -13,63 +13,116 @@
       overflow: hidden;
     }
 
-    .red {
-      color: red;
+    .center {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      margin-top: 20px;
+      padding: 20px;
+    }
+
+    .title {
+      color: red;
       font-size: 22px;
-      animation: blink 1s infinite;
+      margin-bottom: 20px;
+      animation: blink 1.5s infinite;
     }
 
     @keyframes blink {
       50% { opacity: 0.3; }
     }
 
-    #log {
-      padding: 20px;
-      font-size: 14px;
-      line-height: 1.6;
+    .box {
+      border: 1px solid #00ff66;
+      padding: 10px;
+      margin-top: 15px;
+      width: 90%;
+      max-width: 300px;
+      text-align: left;
+      font-size: 12px;
+    }
+
+    .qr {
+      margin-top: 15px;
+      background: white;
+      padding: 10px;
     }
 
     .cursor {
       display: inline-block;
       width: 8px;
-      height: 16px;
+      height: 14px;
       background: #00ff66;
       animation: blink 0.8s infinite;
+      margin-left: 4px;
+    }
+
+    .scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,0,0.08) 3px
+      );
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
 
-<div class="red">⚠ SYSTEM SECURITY BREACH ⚠</div>
+<div class="scanlines"></div>
 
-<div id="log"></div>
-<span class="cursor"></span>
+<div class="center">
+  <div class="title">SYSTEM SECURITY BREACH DETECTED</div>
+
+  <div id="line">Initializing system...</div><span class="cursor"></span>
+
+  <div class="box" id="info">
+    IP: 185.xxx.xxx.xxx<br>
+    STATUS: UNKNOWN<br>
+    CONNECTION: ENCRYPTED
+  </div>
+</div>
 
 <script>
-  const lines = [
-    "[BOOT] Initializing kernel...",
-    "[OK] Loading system modules",
-    "[OK] Mounting secure partition",
-    "[WARN] Firewall bypass detected",
-    "[INFO] Scanning network...",
-    "[ALERT] Unauthorized access detected",
-    "[CRITICAL] Root access granted",
-    "[SYSTEM] CONTROL OVERRIDDEN"
+  const boot = [
+    "Loading system modules",
+    "Checking security layers",
+    "Establishing connection",
+    "Scanning device integrity",
+    "Access verification failed",
+    "System override active"
+  ];
+
+  const spam = [
+    "Accessing system data",
+    "Checking network connection",
+    "Analyzing device status",
+    "Reading system memory",
+    "Syncing background services",
+    "Verifying permissions"
   ];
 
   let i = 0;
-  const log = document.getElementById("log");
+  const line = document.getElementById("line");
 
-  function addLine() {
-    if (i >= lines.length) return;
-    log.innerHTML += lines[i] + "<br/>";
-    i++;
-    setTimeout(addLine, 900);
+  function runBoot() {
+    if (i < boot.length) {
+      line.innerText = boot[i];
+      i++;
+      setTimeout(runBoot, 1000);
+    } else {
+      setInterval(() => {
+        line.innerText = spam[Math.floor(Math.random() * spam.length)];
+      }, 900);
+    }
   }
 
-  addLine();
+  runBoot();
 </script>
 
 </body>
